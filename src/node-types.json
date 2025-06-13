@@ -92,6 +92,10 @@
         "named": true
       },
       {
+        "type": "float",
+        "named": true
+      },
+      {
         "type": "for_statement",
         "named": true
       },
@@ -1604,11 +1608,13 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "diagnostic_comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "escape_sequence",
@@ -1621,6 +1627,10 @@
   {
     "type": "false",
     "named": false
+  },
+  {
+    "type": "float",
+    "named": true
   },
   {
     "type": "for",
