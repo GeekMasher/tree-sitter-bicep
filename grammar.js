@@ -401,9 +401,11 @@ module.exports = grammar({
       field('argument', $.expression),
     )),
 
-    _literal: $ => choice($.number, $.boolean, $.null),
+    _literal: $ => choice($.number, $.float, $.boolean, $.null),
 
-    number: _ => /-?[0-9]+/,
+    number: $ => token(seq(optional('-'), field('value', /\d+/))),
+
+    float: $ => token(seq(optional('-'), field('value', /\d+\.\d+/))),
 
     boolean: _ => choice('true', 'false'),
 

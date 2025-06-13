@@ -204,6 +204,8 @@ Numbers
 var myVar = 123
 var myVar2 = -454
 var mvVar3 = 0
+var myVar4 = 3.14159265359
+var myVar5 = -3.14159265359
 
 ---
 
@@ -216,7 +218,13 @@ var mvVar3 = 0
     (number))
   (variable_declaration
     (identifier)
-    (number)))
+    (number))
+  (variable_declaration
+    (identifier)
+    (float))
+  (variable_declaration
+    (identifier)
+    (float)))
 
 ==============================================
 Booleans
