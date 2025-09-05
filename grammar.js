@@ -46,9 +46,9 @@ module.exports = grammar({
 
   conflicts: $ => [
     [$.arguments, $.parenthesized_expression],
-    [$.primary_expression, $.parameterized_type],
-    [$.primary_expression, $._type_not_union],
-    [$.primary_expression, $._type_not_union, $._lhs_expression],
+    [$._primary_expression, $.parameterized_type],
+    [$._primary_expression, $._type_not_union],
+    [$._primary_expression, $._type_not_union, $._lhs_expression],
     [$.binary_expression, $.union_type],
     [$.type, $.union_type],
   ],
@@ -69,25 +69,25 @@ module.exports = grammar({
   ],
 
   precedences: $ => [
-    [$.union_type, $.primary_expression],
+    [$.union_type, $._primary_expression],
     [$.union_type, $._literal],
   ],
 
   supertypes: $ => [
-    $.statement,
-    $.declaration,
-    $.expression,
-    $.primary_expression,
+    $._statement,
+    $._declaration,
+    $._expression,
+    $._primary_expression,
   ],
 
   word: $ => $.identifier,
 
   rules: {
-    infrastructure: $ => repeat($.statement),
+    infrastructure: $ => repeat($._statement),
 
-    statement: $ => choice(
+    _statement: $ => choice(
       $.decorators,
-      $.declaration,
+      $._declaration,
       $.import_statement,
       $.import_with_statement,
       $.import_functionality,
@@ -95,7 +95,7 @@ module.exports = grammar({
       $.target_scope_assignment,
     ),
 
-    declaration: $ => choice(
+    _declaration: $ => choice(
       $.module_declaration,
       $.metadata_declaration,
       $.output_declaration,
@@ -126,7 +126,7 @@ module.exports = grammar({
       choice('import', 'provider'),
       $.string,
       'with',
-      $.expression,
+      $._expression,
       optional(seq('as', $.identifier)),
     ),
 
@@ -148,7 +148,7 @@ module.exports = grammar({
       'metadata',
       $.identifier,
       '=',
-      $.expression,
+      $._expression,
     ),
 
     output_declaration: $ => seq(
@@ -156,14 +156,14 @@ module.exports = grammar({
       $.identifier,
       $.type,
       '=',
-      $.expression,
+      $._expression,
     ),
 
     parameter_declaration: $ => seq(
       'param',
       $.identifier,
       $.type,
-      optional(seq('=', $.expression)),
+      optional(seq('=', $._expression)),
     ),
 
     resource_declaration: $ => seq(
@@ -180,7 +180,7 @@ module.exports = grammar({
       $.identifier,
       '=',
       choice(
-        $.expression,
+        $._expression,
         $.array_type,
         $.parameterized_type,
         $.union_type,
@@ -192,7 +192,7 @@ module.exports = grammar({
       'var',
       $.identifier,
       '=',
-      $.expression,
+      $._expression,
       optional('!'),
     ),
 
@@ -202,7 +202,7 @@ module.exports = grammar({
       $.parameters,
       field('returns', $.type),
       '=>',
-      $.expression,
+      $._expression,
     ),
 
     test_block: $ => seq(
@@ -217,15 +217,15 @@ module.exports = grammar({
       'assert',
       field('name', $.identifier),
       '=',
-      $.expression,
+      $._expression,
     ),
 
     parameters: $ => seq('(', commaSep($.parameter), ')'),
 
     parameter: $ => seq($.identifier, $.type),
 
-    expression: $ => choice(
-      $.primary_expression,
+    _expression: $ => choice(
+      $._primary_expression,
       $.assignment_expression,
       $.unary_expression,
       $.binary_expression,
@@ -233,7 +233,7 @@ module.exports = grammar({
       $.lambda_expression,
     ),
 
-    primary_expression: $ => prec(2, choice(
+    _primary_expression: $ => prec(2, choice(
       $.subscript_expression,
       $.member_expression,
       $.resource_expression,
@@ -249,15 +249,15 @@ module.exports = grammar({
     )),
 
     call_expression: $ => prec.right(PREC.CALL, seq(
-      field('function', $.expression),
+      field('function', $._expression),
       field('arguments', $.arguments),
       optional(alias('!', $.nullable_return_type)),
     )),
 
-    lambda_expression: $ => prec.right(seq($.expression, '=>', $.expression)),
+    lambda_expression: $ => prec.right(seq($._expression, '=>', $._expression)),
 
-    arguments: $ => seq('(', commaSep($.expression), ')'),
-    parenthesized_expression: $ => seq('(', commaSep($.expression), ')'),
+    arguments: $ => seq('(', commaSep($._expression), ')'),
+    parenthesized_expression: $ => seq('(', commaSep($._expression), ')'),
 
     decorator: $ => prec(1, seq('@', $.call_expression)),
     decorators: $ => prec.right(repeat1($.decorator)),
@@ -266,7 +266,7 @@ module.exports = grammar({
       '[',
       optionalCommaSep(seq(
         optional($.decorators),
-        $.expression,
+        $._expression,
       )),
       ']',
     ),
@@ -289,7 +289,7 @@ module.exports = grammar({
         ),
         ':',
         choice(
-          $.expression,
+          $._expression,
           $.primitive_type,
           $.array_type,
           $.nullable_type,
@@ -312,7 +312,7 @@ module.exports = grammar({
     assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
       field('left', choice($.parenthesized_expression, $._lhs_expression)),
       '=',
-      field('right', $.expression),
+      field('right', $._expression),
     )),
 
     for_statement: $ => seq(
@@ -323,9 +323,9 @@ module.exports = grammar({
         field('initializer', $.identifier),
       )),
       'in',
-      $.expression,
+      $._expression,
       ':',
-      field('body', choice($.expression, $.if_statement)), ']',
+      field('body', choice($._expression, $.if_statement)), ']',
     ),
 
     for_loop_parameters: $ => seq(
@@ -337,32 +337,32 @@ module.exports = grammar({
     ),
 
     member_expression: $ => prec(PREC.SUBSCRIPT, seq(
-      field('object', choice($.expression, $.primary_expression, $.parameterized_type)),
+      field('object', choice($._expression, $._primary_expression, $.parameterized_type)),
       optional('!'),
       choice('.', '.?'),
       field('property', alias($.identifier, $.property_identifier)),
     )),
 
     subscript_expression: $ => prec.right(PREC.SUBSCRIPT, seq(
-      field('object', choice($.expression, $.primary_expression)),
+      field('object', choice($._expression, $._primary_expression)),
       '[',
       optional('?'),
-      field('index', $.expression),
+      field('index', $._expression),
       ']',
     )),
 
     resource_expression: $ => prec.right(PREC.SUBSCRIPT, seq(
-      field('object', choice($.expression, $.primary_expression)),
+      field('object', choice($._expression, $._primary_expression)),
       '::',
       field('resource', $.identifier),
     )),
 
     ternary_expression: $ => prec.right(PREC.TERNARY, seq(
-      field('condition', $.expression),
+      field('condition', $._expression),
       '?',
-      field('consequence', $.expression),
+      field('consequence', $._expression),
       ':',
-      field('alternative', $.expression),
+      field('alternative', $._expression),
     )),
 
     binary_expression: $ => {
@@ -388,17 +388,17 @@ module.exports = grammar({
 
       return choice(...table.map(([operator, precedence]) => {
         return prec.left(precedence, seq(
-          field('left', $.expression),
+          field('left', $._expression),
           // @ts-ignore
           field('operator', operator),
-          field('right', $.expression),
+          field('right', $._expression),
         ));
       }));
     },
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
       field('operator', choice('!', '-')),
-      field('argument', $.expression),
+      field('argument', $._expression),
     )),
 
     _literal: $ => choice($.number, $.boolean, $.null),
@@ -449,7 +449,7 @@ module.exports = grammar({
         /u\{[0-9a-fA-F]+\}/,
       ))),
 
-    interpolation: $ => prec(1, seq('${', $.expression, '}')),
+    interpolation: $ => prec(1, seq('${', $._expression, '}')),
 
     identifier: _ => token(/[a-zA-Z_*][a-zA-Z0-9_]*/), // TODO: support unicode, namespaces
     keyword_identifier: $ => prec(-3, alias(
@@ -495,7 +495,7 @@ module.exports = grammar({
     array_type: $ => seq($.type, '[', ']'),
     nullable_type: $ => seq(
       choice(
-        $.expression,
+        $._expression,
         $.primitive_type,
         $.array_type,
         $.parenthesized_type,
@@ -508,13 +508,13 @@ module.exports = grammar({
     union_type: $ => prec.right(seq(
       optional(choice(
         prec(2, $._type_not_union),
-        $.expression,
+        $._expression,
       )),
       repeat1(prec.right(1, seq(
         '|',
         choice(
           prec(2, $._type_not_union),
-          $.expression,
+          $._expression,
         ),
       ))),
     )),
