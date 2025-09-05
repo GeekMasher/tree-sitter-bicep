@@ -1,6 +1,6 @@
 [
   {
-    "type": "declaration",
+    "type": "_declaration",
     "named": true,
     "subtypes": [
       {
@@ -46,9 +46,13 @@
     ]
   },
   {
-    "type": "expression",
+    "type": "_expression",
     "named": true,
     "subtypes": [
+      {
+        "type": "_primary_expression",
+        "named": true
+      },
       {
         "type": "assignment_expression",
         "named": true
@@ -62,10 +66,6 @@
         "named": true
       },
       {
-        "type": "primary_expression",
-        "named": true
-      },
-      {
         "type": "ternary_expression",
         "named": true
       },
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "type": "primary_expression",
+    "type": "_primary_expression",
     "named": true,
     "subtypes": [
       {
@@ -134,11 +134,11 @@
     ]
   },
   {
-    "type": "statement",
+    "type": "_statement",
     "named": true,
     "subtypes": [
       {
-        "type": "declaration",
+        "type": "_declaration",
         "named": true
       },
       {
@@ -176,7 +176,7 @@
       "required": false,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         }
       ]
@@ -191,11 +191,11 @@
       "required": false,
       "types": [
         {
-          "type": "decorators",
+          "type": "_expression",
           "named": true
         },
         {
-          "type": "expression",
+          "type": "decorators",
           "named": true
         }
       ]
@@ -236,7 +236,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         }
       ]
@@ -277,7 +277,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -293,7 +293,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -377,7 +377,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -408,7 +408,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -498,7 +498,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           },
           {
@@ -523,7 +523,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         },
         {
@@ -599,7 +599,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         },
         {
@@ -623,7 +623,7 @@
       "required": false,
       "types": [
         {
-          "type": "statement",
+          "type": "_statement",
           "named": true
         }
       ]
@@ -638,7 +638,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         }
       ]
@@ -653,7 +653,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         }
       ]
@@ -668,7 +668,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           },
           {
@@ -698,7 +698,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         },
         {
@@ -763,11 +763,11 @@
       "required": true,
       "types": [
         {
-          "type": "array_type",
+          "type": "_expression",
           "named": true
         },
         {
-          "type": "expression",
+          "type": "array_type",
           "named": true
         },
         {
@@ -809,15 +809,15 @@
       "required": true,
       "types": [
         {
+          "type": "_expression",
+          "named": true
+        },
+        {
           "type": "array_type",
           "named": true
         },
         {
           "type": "compatible_identifier",
-          "named": true
-        },
-        {
-          "type": "expression",
           "named": true
         },
         {
@@ -860,7 +860,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         },
         {
@@ -902,7 +902,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         },
         {
@@ -959,7 +959,7 @@
       "required": false,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         }
       ]
@@ -1025,7 +1025,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1079,7 +1079,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1089,7 +1089,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1120,7 +1120,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1130,7 +1130,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1140,7 +1140,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1261,11 +1261,11 @@
       "required": true,
       "types": [
         {
-          "type": "array_type",
+          "type": "_expression",
           "named": true
         },
         {
-          "type": "expression",
+          "type": "array_type",
           "named": true
         },
         {
@@ -1296,7 +1296,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1326,15 +1326,15 @@
       "required": true,
       "types": [
         {
+          "type": "_expression",
+          "named": true
+        },
+        {
           "type": "array_type",
           "named": true
         },
         {
           "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "expression",
           "named": true
         },
         {
@@ -1414,7 +1414,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         },
         {
@@ -1448,7 +1448,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         },
         {
@@ -1604,11 +1604,13 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "diagnostic_comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "escape_sequence",
